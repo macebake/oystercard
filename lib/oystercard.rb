@@ -16,5 +16,17 @@ class Oystercard
     fail "Not enough credit on card" if fare > @balance
     @balance -= fare
   end
+  def touch_in
+    fail "card already in journey" if in_journey?
+    @in_journey=true
+  end
 
+  def touch_out
+    fail "card not in journey" unless in_journey?
+     @in_journey=false
+  end
+
+  def in_journey?
+    @in_journey
+  end
 end
