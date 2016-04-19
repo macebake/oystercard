@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Oystercard Challenge
 
 User stories:
@@ -49,3 +50,6 @@ I need a penalty charge deducted if I fail to touch in or out
 In order to be charged the correct amount
 As a customer
 I need to have the correct fare calculated
+=======
+OYSTERCARD
+>>>>>>> 21b829530b9b0618b877353ae7908f98d7b42a75
