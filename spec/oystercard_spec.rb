@@ -1,44 +1,38 @@
 require 'oystercard'
 
-<<<<<<< HEAD
 describe Oystercard do
+subject(:card) {Oystercard.new}
+#subject(:card_topped_up) {Oystercard.new(50)}
+it { is_expected.to respond_to(:top_up) }
+it { is_expected.to respond_to(:deduct_fare).with(1).argument }
+
 
 	describe '#initalize' do
 		it 'has a default balance of £0' do
-			expect(subject.balance).to eq(0)
+			expect(card.balance).to eq(0)
 	  end
 	end
 
 	describe '#top_up' do
+
 		it 'allows putting money on oystercard' do
-			expect{subject.top_up(3)}.to change{subject.balance}.by(3)
+			expect{card.top_up(3)}.to change{card.balance}.by(3)
 		end
 		it "can only top up to a maximum of £90" do
 			max_balance = Oystercard::MAX_BALANCE
-			subject.top_up(max_balance)
-			expect{subject.top_up(6)}.to raise_error "Can't top up over £#{max_balance}"
+			card.top_up(max_balance)
+			expect{card.top_up(6)}.to raise_error "Can't top up over £#{max_balance}"
 		end
 	end
-
-end
-=======
-describe Oystercard do 
-
-    describe "#initalize" do
-        it "has a default balance of £0" do
-            expect(subject.balance).to eq 0
-      end
+  describe '#deduct_fare' do
+    it "checks to see if card fare is deducted from balance" do
+      card.top_up(50)
+      card.deduct_fare(5)
+      expect(card.balance).to eq 45
     end
-
-    describe "#top_up" do
-        it "allows putting money on oystercard" do
-            expect(Oystercard.new.top_up(3)).to eq 3
-        end
-        it "can only top up to a maximum of £90" do
-            subject.top_up(90)
-            expect{subject.top_up(6)}.to raise_error "Can't top up over £90"
-        end
+    it "raises error if fare exceeds balance" do
+      expect{card.deduct_fare(5)}.to raise_error "Not enough credit on card"
     end
-
+  end
 end
->>>>>>> 21b829530b9b0618b877353ae7908f98d7b42a75
+
