@@ -2,10 +2,12 @@ require 'oystercard'
 
 describe Oystercard do
 subject(:card) {Oystercard.new}
-#subject(:card_topped_up) {Oystercard.new(50)}
+#let (:card_topped_up) {card.top_up(50)}
 it { is_expected.to respond_to(:top_up) }
 it { is_expected.to respond_to(:deduct_fare).with(1).argument }
 it { is_expected.to respond_to(:touch_in) }
+
+
 
 	describe '#initalize' do
 		it 'has a default balance of £0' do
@@ -34,15 +36,23 @@ it { is_expected.to respond_to(:touch_in) }
     end
   end
     describe '#touch_in' do
+      before {card.top_up(50)}
       it "touches in" do
         card.touch_in
         expect(card).to be_in_journey
       end
+      it "raises error if balance below £#{Oystercard::MIN_BALANCE}" do
+        card.deduct_fare(49.50)
+        expect{card.touch_in}.to raise_error "not enough money on the card min balance of £#{Oystercard::MIN_BALANCE}"
+      end
     describe '#touch_out' do
+      before{card.touch_in}
       it "touches out" do
-        card.touch_ingit
         card.touch_out
         expect(card).not_to be_in_journey
+      end
+      it "deducts minimum fare" do
+        expect{card.touch_out}.to change{card.balance}.by(-Oystercard::MIN_BALANCE)
       end
     end
   end

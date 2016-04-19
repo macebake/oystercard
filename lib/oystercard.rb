@@ -1,5 +1,6 @@
 class Oystercard
 	MAX_BALANCE = 90
+  MIN_BALANCE = 1
 	attr_reader :balance, :max_balance
 
 	def initialize(max_balance=MAX_BALANCE)
@@ -12,21 +13,28 @@ class Oystercard
 		@balance += amount
 	end
 
-  def deduct_fare(fare)
-    fail "Not enough credit on card" if fare > @balance
-    @balance -= fare
-  end
+
   def touch_in
     fail "card already in journey" if in_journey?
+    fail "not enough money on the card min balance of £#{MIN_BALANCE}" if @balance < MIN_BALANCE
     @in_journey=true
   end
 
   def touch_out
     fail "card not in journey" unless in_journey?
+   # deduct_fare
      @in_journey=false
   end
 
   def in_journey?
     @in_journey
   end
+
+# Private << How do we test this???
+
+  def deduct_fare(fare)
+    fail "Not enough credit on card" if fare > @balance
+    @balance -= fare
+  end
+
 end
