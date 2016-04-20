@@ -29,7 +29,9 @@ class Journey
   end
 
   def complete?
-    (@journey_log.has_key?(:start) && @journey_log.has_key?(:end)) || @journey_log.empty?
+    (@journey_log.has_key?(:start) &&
+    @journey_log.has_key?(:end)) ||
+    @journey_log.empty?
   end
 
 end

@@ -42,7 +42,7 @@ describe Oystercard do
     context "outside a journey" do
       context "sufficient funds" do
         let(:journey) {double(:journey)}
-        before { card.top_up Oystercard::MIN_FARE ; card.touch_in entry_station}
+        before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station}
 
         it "starts a journey" do
           expect(card.in_journey?).to be_truthy
@@ -58,26 +58,39 @@ describe Oystercard do
         end
       end
     end
-    # context "during a journey" do
-    #   before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station }
-    #   it "charges a penalty fare" do
-    #     expect{card.touch_in entry_station}.to change{card.balance}.by(-Oystercard::PENALTY_FARE)
-    #   end
-    # end
+    context "during a journey" do
+      before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station }
+      it "charges a penalty fare" do
+        expect{card.touch_in entry_station}.to change{card.balance}
+      end
+    end
   end
 
   describe "#touch_out" do
     context "during a journey" do
-      before { card.top_up Oystercard::MIN_FARE; card.touch_in entry_station }
+      before { card.top_up Oystercard::MAX_BALANCE; card.touch_in entry_station }
       let(:journey) {double(:journey)}
       it "ends the journey" do
         card.touch_out exit_station
         expect(card.in_journey?).to be_falsey
       end
-      it "deducts the balance by minimum fare" do
-        expect { card.touch_out exit_station }.to change { card.balance }.by(-Oystercard::MIN_FARE)
+      it "reduces the balance" do
+        expect { card.touch_out exit_station }.to change { card.balance }
       end
-
+    end
+    context "outside a journey" do
+      before { card.top_up Oystercard::MAX_BALANCE }
+      context "new card" do
+        it "reduces the balance" do
+          expect { card.touch_out exit_station }.to change { card.balance }
+        end
+      end
+      context "used card" do
+        before { card.touch_in entry_station ; card.touch_out exit_station }
+        it "reduces the balance" do
+          expect { card.touch_out exit_station }.to change { card.balance }
+        end
+      end
     end
   end
 end
