@@ -73,6 +73,21 @@ describe "Oystercard challenge" do
     end
   end
 
+  describe "penalty fares" do
+    context "touching in without touching out" do
+      before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station }
+      it "deducts a penalty fare" do
+        expect { card.touch_in exit_station }.to change { card.balance }.by(-Oystercard::PENALTY_FARE)
+      end
+    end
+    context "touch out wihtout touching in" do
+      before { card.top_up Oystercard::MAX_BALANCE }
+      it 'deducts a penalty fare' do
+        expect { card.touch_out exit_station }.to change { card.balance }.by(-Oystercard::PENALTY_FARE)
+      end
+    end
+  end
+
   describe "finding station information" do
     it "finds the zone" do
       expect(entry_station.zone).to eq 1

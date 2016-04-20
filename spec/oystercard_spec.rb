@@ -47,9 +47,6 @@ describe Oystercard do
         it "starts a journey" do
           expect(card.in_journey?).to be_truthy
         end
-        # it "records the entry station" do
-        #   expect(journey).to receive :start=
-        # end
         it "adds to journey history" do
           expect(card.journey_history).not_to be_empty
         end
@@ -59,6 +56,12 @@ describe Oystercard do
         it "raises an error" do
           expect { card.touch_in entry_station }.to raise_error Oystercard::MIN_BAL_ERR
         end
+      end
+    end
+    context "during a journey" do
+      before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station }
+      it "charges a penalty fare" do
+        expect{card.touch_in entry_station}.to change{card.balance}.by(-Oystercard::PENALTY_FARE)
       end
     end
   end

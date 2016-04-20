@@ -5,6 +5,7 @@ class Oystercard
   INITIAL_BALANCE = 0
   MIN_FARE = 1
   MAX_BALANCE = 90
+  PENALTY_FARE = 6
   MAX_BAL_ERR = "Maximum balance is £#{MAX_BALANCE}"
   MIN_BAL_ERR = "Minimum balance is £#{MIN_FARE}"
 
@@ -56,6 +57,3 @@ class Oystercard
   end
 
 end
-
-# [{start => aldgate, end => bank}, ]
-# [<Journey:0x007fedf15126d8 @start=aldgate, @end=bank>, <Journey:vpfisudhgw087t]
