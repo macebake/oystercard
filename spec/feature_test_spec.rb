@@ -72,4 +72,7 @@ describe "FEATURE TEST" do
        expect(station_with_args.zone).to eq(1)
     end
   end
+  describe "Journey" do
+    
+  end
 end
