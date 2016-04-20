@@ -1,3 +1,5 @@
+require 'journey'
+
 class Oystercard
 
   INITIAL_BALANCE = 0
@@ -14,7 +16,7 @@ class Oystercard
   end
 
   def in_journey?
-    !(last_journey.has_key?(:end))
+    last_journey.get_end.nil?
   end
 
   def top_up amount
@@ -24,12 +26,12 @@ class Oystercard
 
   def touch_in entry_station
     raise MIN_BAL_ERR if insufficient_funds?
-    @journey_history << { :start => entry_station }
+    @journey_history << Journey.new(entry_station)
   end
 
   def touch_out exit_station
     deduct MIN_FARE
-    last_journey[:end] = exit_station
+    last_journey.end(exit_station)
   end
 
   def journey_history
