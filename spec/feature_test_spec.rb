@@ -72,7 +72,12 @@ describe "FEATURE TEST" do
        expect(station_with_args.zone).to eq(1)
     end
   end
-  describe "Journey" do
-    
-  end
+  #     describe "Journey" do
+  #       it 'deducts a penalty charge if you do not touch out on a journey'  do
+  #         card.touch_in
+  #         journey.start(entry_station)
+  #         journey.finish(exit_station)
+  #         card.touch_in.to raise_error "penalty charge of 6"
+  #       end
+  # end
 end
