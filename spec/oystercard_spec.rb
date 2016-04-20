@@ -58,12 +58,12 @@ describe Oystercard do
         end
       end
     end
-    context "during a journey" do
-      before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station }
-      it "charges a penalty fare" do
-        expect{card.touch_in entry_station}.to change{card.balance}.by(-Oystercard::PENALTY_FARE)
-      end
-    end
+    # context "during a journey" do
+    #   before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station }
+    #   it "charges a penalty fare" do
+    #     expect{card.touch_in entry_station}.to change{card.balance}.by(-Oystercard::PENALTY_FARE)
+    #   end
+    # end
   end
 
   describe "#touch_out" do

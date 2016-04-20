@@ -77,7 +77,7 @@ describe "Oystercard challenge" do
     context "touching in without touching out" do
       before { card.top_up Oystercard::MAX_BALANCE ; card.touch_in entry_station }
       it "deducts a penalty fare" do
-        expect { card.touch_in exit_station }.to change { card.balance }.by(-Oystercard::PENALTY_FARE)
+        expect { card.touch_in entry_station }.to change { card.balance }.by(-Oystercard::PENALTY_FARE)
       end
     end
     context "touch out wihtout touching in" do

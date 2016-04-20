@@ -17,7 +17,7 @@ class Oystercard
   end
 
   def in_journey?
-    last_journey.get_end.nil?
+    journey_history.empty? ? false : last_journey.get_end.nil?
   end
 
   def top_up amount
@@ -27,7 +27,9 @@ class Oystercard
 
   def touch_in entry_station
     raise MIN_BAL_ERR if insufficient_funds?
-    @journey_history << Journey.new(entry_station)
+    #deduct(PENALTY_FARE) if in_journey?
+    @journey_history << Journey.new
+    last_journey.start entry_station
   end
 
   def touch_out exit_station
