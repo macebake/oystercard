@@ -1,5 +1,6 @@
 require "./lib/oystercard.rb"
 require "./lib/station.rb"
+require "./lib/journey.rb"
 
 describe "Oystercard challenge" do
   let(:card) { Oystercard.new }
@@ -44,7 +45,7 @@ describe "Oystercard challenge" do
         end
         it "records the entry station" do
           card.touch_in entry_station
-          expect(card.journey_history.last[:start]).to eq entry_station
+          expect(card.journey_history.last.get_start).to eq entry_station
         end
       end
       context "insufficient funds" do
@@ -58,7 +59,6 @@ describe "Oystercard challenge" do
   describe "touching out" do
     context "during a journey" do
       before { card.top_up Oystercard::MIN_FARE; card.touch_in entry_station }
-      let(:journey) { {:start => entry_station, :end => exit_station} }
       it "ends the journey" do
         card.touch_out exit_station
         expect(card.in_journey?).to be_falsey
@@ -66,9 +66,9 @@ describe "Oystercard challenge" do
       it "deducts the balance by minimum fare" do
         expect { card.touch_out exit_station }.to change { card.balance }.by(-Oystercard::MIN_FARE)
       end
-      it "adds the journey to the journey history" do
+      it "adds the end point to the journey history" do
         card.touch_out exit_station
-        expect(card.journey_history).to include journey
+        expect(card.journey_history.last.get_end).to eq exit_station
       end
     end
   end
