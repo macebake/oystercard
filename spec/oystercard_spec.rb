@@ -1,14 +1,11 @@
 require "oystercard"
 
 describe Oystercard do
-
-   it { expect(subject).to respond_to(:balance, :in_journey?, :travelled_from) }
-   it { expect(subject).to respond_to(:top_up, :touch_in, :touch_out).with(1).argument}
-
    let(:weeksfare) {50}
    let(:entry_station) { double(:entry_station)}
    let(:exit_station) { double(:exit_station)}
-  #  let(:oyster) { double(:oyster, top_up: 50)}
+   let(:standard_fare) { 1 }
+   let(:penalty_fare) { 6 }
 
    describe "#balance" do
 
@@ -32,7 +29,7 @@ describe Oystercard do
 
   describe "#in_journey" do
     it "should not be in_journey when created" do
-      expect(subject).not_to be_in_journey
+      expect(subject.in_use).to be false
     end
   end
 
@@ -40,7 +37,7 @@ describe Oystercard do
     it "should touch in" do
       subject.top_up(weeksfare)
       subject.touch_in entry_station
-      expect(subject.in_journey?).to eq true
+      expect(subject.in_use).to eq true
     end
 
     it 'should not allow to touch in if you have insufficient funds' do
@@ -50,31 +47,35 @@ describe Oystercard do
 
   describe "#touch_out" do
     it "should touch out" do
-      subject.touch_out(entry_station)
-      expect(subject.in_journey?).to eq false
+      subject.touch_out(exit_station)
+      expect(subject.in_use).to eq false
     end
 
-    it "should charge a fee on touch out" do
+    it "should charge standard fare on touch out" do
       subject.top_up(weeksfare)
-      subject.touch_in (entry_station)
-      expect{subject.touch_out(entry_station)}.to change{subject.balance}.by(-Oystercard::STANDARD_FARE)
+      subject.touch_in(entry_station)
+      expect{subject.touch_out(exit_station)}.to change{subject.balance}.by(-standard_fare)
     end
-  end
 
-  describe "#travelled_from?" do
-    it "should return entry_station you touched in" do
+    it "should charge penalty fare on touch out if not touched in" do
       subject.top_up(weeksfare)
-      subject.touch_in entry_station
-      expect(subject.travelled_from).to eq entry_station
+      expect{subject.touch_out(exit_station)}.to change{subject.balance}.by(-penalty_fare)
     end
   end
 
   describe '#history' do
-    it 'should show the entry and the exit entry_stations' do
+    before do
       subject.top_up(weeksfare)
       subject.touch_in(entry_station)
       subject.touch_out(exit_station)
-      expect(subject.history).to eq [entry_station, exit_station]
     end
+    it 'add entry station of current journey to history' do
+      expect(subject.history[0]).to include entry_station
+    end
+
+    it 'add exit station of current journey to history' do
+      expect(subject.history[0][entry_station]).to be exit_station
+    end
+
   end
 end

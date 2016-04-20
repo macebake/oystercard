@@ -1,30 +1,32 @@
 class Journey
-  attr_reader :complete, :entry_station
 
   PENALTY_FARE = 6
   STANDARD_FARE = 1
 
-  def initialize(station)
-    @complete = false
+  def initialize(*station)
     @entry_station = station
+    @exit_station = nil
   end
 
   def finish(station)
-    @complete = true
-    # journey_log(station)
-    # fare(station)
+    @exit_station = station
+    log
+    fare
   end
 
   def fare
+    return PENALTY_FARE unless complete?
     STANDARD_FARE
   end
 
-  def complete?
-    @complete
+  def log
+    { @entry_station[0] => @exit_station }
   end
 
-  # def journey_log(exit_station)
-  #   { @entry_station: exit_station }
-  # end
+  private
+
+  def complete?
+    @entry_station.any? && @exit_station != nil
+  end
 
 end
