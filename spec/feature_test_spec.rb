@@ -3,13 +3,16 @@ require 'oystercard'
 
 describe "FEATURE TEST" do
   let(:card) {Oystercard.new}
-  let(:station) {Station.new}
   let(:name) {double :name}
   let(:zone) {double :zone}
   let (:station) {double :station}
+  let(:station_with_args){Station.new("Old Street", 1)}
   let (:entry_station) {double :entry_station}
   let (:exit_station) {double :exit_station}
   let (:journey) { {entry_station: entry_station, exit_station: exit_station} }
+  let(:zone){ 1 }
+  let(:name){ "Old Street" }
+ # let (:station_with_args) {described_class.new name , zone }
 
     describe "oystercard" do
     #   it "deducts my fare from my card for a journey" do
@@ -62,11 +65,11 @@ describe "FEATURE TEST" do
         end
       end
   end
-  describe "Station" do
-    it "has a name and a zone" do
-      expect(station.name).to eq name
-      expect(station.zone).to eq zone
+    describe "Station" do
 
+      it "has a name and a zone" do
+        expect(station_with_args.name).to eq("Old Street")
+       expect(station_with_args.zone).to eq(1)
+    end
   end
-end
 end

@@ -1,11 +1,12 @@
-
 require 'station'
-describe Station do
 
-  subject {described_class.new(name: "name", zone: 1)}
+describe Station do
+let(:zone){ 1 }
+let(:name){ "Old Street" }
+  subject {described_class.new name , zone }
 
   it 'knows its name' do
-    expect(subject.name).to eq("name")
+    expect(subject.name).to eq("Old Street")
   end
 
   it 'knows its zone' do
