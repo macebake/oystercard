@@ -78,3 +78,8 @@ require "./lib/station.rb"
 # In order to be charged correctly
 # As a customer
 # I need a penalty charge deducted if I fail to touch in or out
+
+oyster = Oystercard.new
+bank = station.new
+oyster.top_up(50)
+oyster.touch_in(bank)
