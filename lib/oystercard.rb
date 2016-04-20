@@ -54,3 +54,7 @@ class Oystercard
   end
 
 end
+
+# [{start => aldgate, end => bank}, ]
+# [<Journey:0x007fedf15126d8 @start=aldgate, @end=bank>, <Journey:vpfisudhgw087t]
+
