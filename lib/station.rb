@@ -8,7 +8,7 @@ class Station
   attr_reader :zone
 
   def name
-    @name.dup
+    @name.clone
   end
 
 end
