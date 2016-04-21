@@ -1,12 +1,13 @@
 class Journey
   PENALTY_FARE = 6
 
-  attr_reader :entry_station, :exit_station
+  attr_reader :entry_station, :exit_station, :journeys
 
- def initialize (entry_station)
-   @entry_station = entry_station
-  @exit_station
-#   @journeys = {}
+ def initialize (*entry_station)
+  @entry_station = entry_station
+  @exit_station = nil
+  @journeys={}
+  @journeys[:entry_station]=entry_station
   @complete = false
  end
 
@@ -19,20 +20,25 @@ class Journey
   def finish(station)
     #@entry_station = nil
     @exit_station=station
-    self
-    #@journeys[:exit_station]=station
-    #@complete=true
+    @journeys[:exit_station]=station
+    @complete=true
   end
 
 
 
   def complete?
-     @complete
+    # @complete
+     @exit_station && @entry_station
+
+     #this needs to return a booolean if both true else false
   end
+
   def fare
-    PENALTY_FARE if @entry_station== nil || @exit_station== nil
-    1
+    #calls complete if true charges 1 else penalty fare
+    complete? ? 1 : PENALTY_FARE
+
   end
+
   private
   def caculate_penalty?
 

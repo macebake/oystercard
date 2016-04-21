@@ -9,7 +9,7 @@ it { is_expected.to respond_to(:touch_in) }
 let (:station) {double :station}
 let (:entry_station) {double :entry_station}
 let (:exit_station) {double :exit_station}
-let (:journey) { {entry_station: entry_station, exit_station: exit_station} }
+#let (:journey) { {entry_station: entry_station, exit_station: exit_station} }
 
 
 	describe '#initalize' do
@@ -65,16 +65,16 @@ let (:journey) { {entry_station: entry_station, exit_station: exit_station} }
         expect{card.touch_out(exit_station)}.to change{card.balance}.by(-Oystercard::MIN_FARE)
       end
     end
-    describe '#journeys' do
-      it "the storage for journeys will be empty at the beginning" do
-        expect(card.journeys).to be_empty
-      end
-      it "stores the journey into the journeys variable" do
-         card.touch_in(entry_station)
-         card.touch_out(exit_station)
-         expect(card.journeys).to include journey
-      end
-    end
+  #   describe '#journeys' do
+  #     it "the storage for journeys will be empty at the beginning" do
+  #       expect(card.journeys).to be_empty
+  #     end
+  #     it "stores the journey into the journeys variable" do
+  #        card.touch_in(entry_station)
+  #        card.touch_out(exit_station)
+  #        expect(card.journeys).to include journey
+  #     end
+  #   end
   end
 end
 
