@@ -18,7 +18,7 @@ class Oystercard
 
 
   def touch_in(station)
-    fail "card already in journey" if in_journey?
+   # raise "card already in journey" if in_journey?
     fail "not enough money on the card min balance of £#{MIN_FARE}" if @balance < MIN_FARE
     @entry_station = station
     @card_journeys << Journey.new
@@ -27,20 +27,20 @@ class Oystercard
 
   def touch_out(station)
 	#	@card_journeys.last.complete?
-    fail "card not in journey" unless in_journey?
-    deduct_fare
-    @entry_station = nil
+   # fail "card not in journey" unless in_journey?
     @card_journeys.last.finish(station)
-  end
-
-  def in_journey?
-    !!@entry_station
+    fare = @card_journeys.last.fare
+    deduct_fare(fare)
   end
 
 private
 
-  def deduct_fare
-    @balance -= MIN_FARE
+  # def in_journey?
+  #   !!@entry_station
+  # end
+
+  def deduct_fare fare
+    @balance -= fare
   end
 
 end

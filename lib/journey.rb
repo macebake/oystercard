@@ -16,7 +16,8 @@ class Journey
     @journeys[:exit_station]=station
   end
   def complete?
-     (@exit_station && @entry_station) || journeys.empty?
+      journeys.has_key?(:entry_station) && journeys.has_key?(:exit_station)# || journeys.empty?
+    # (@exit_station && @entry_station) || journeys.empty?
   end
 
   def fare

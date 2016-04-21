@@ -42,10 +42,10 @@ let (:exit_station) {double :exit_station}
 
 
       before {card.top_up(50)}
-      it "touches in" do
-        card.touch_in(entry_station)
-        expect(card.in_journey?).to be_truthy
-      end
+      # it "raises error if touched in twice" do
+      #   card.touch_in(station)
+      #   expect{card.touch_in(station)}.to raise_error "card already in journey"
+      # end
       # it "raises error if balance below £#{Oystercard::MIN_FARE}" do
       #   card.deduct_fare(49.50)
       #   expect{card.touch_in}.to raise_error "not enough money on the card min balance of £#{Oystercard::MIN_FARE}"
@@ -75,6 +75,6 @@ let (:exit_station) {double :exit_station}
   #        expect(card.journeys).to include journey
   #     end
   #   end
-  end
+    end
 end
 
