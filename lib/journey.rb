@@ -21,7 +21,7 @@ class Journey
     # (@exit_station && @entry_station) || journeys.empty?
   end
 
-  def in_journey?
+  def en_route?
      journeys.has_key?(:entry_station) && !journeys.has_key?(:exit_station)
   end
 
