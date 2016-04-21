@@ -56,14 +56,14 @@ describe "FEATURE TEST" do
         expect(card.entry_station).to eq entry_station
       end
     end
-      describe "card stores the journey history" do
-        it "it stores the journey history" do
-          card.top_up(50)
-          card.touch_in(entry_station)
-          card.touch_out(exit_station)
-          expect(card.journeys).to eq journey
-        end
-      end
+      # describe "card stores the journey history" do
+      #   it "it stores the journey history" do
+      #     card.top_up(50)
+      #     card.touch_in(entry_station)
+      #     card.touch_out(exit_station)
+      #     expect(card.journeys).to eq journey
+      #   end
+      # end
   end
     describe "Station" do
 
