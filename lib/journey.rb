@@ -7,12 +7,12 @@ class Journey
   @journeys={}
   end
   def start(station)
-    @entry_station = station
+  #  @entry_station = station
     @journeys[:entry_station]=station
   end
 
   def finish(station)
-    @exit_station=station
+  #  @exit_station=station
     @journeys[:exit_station]=station
   end
   def complete?

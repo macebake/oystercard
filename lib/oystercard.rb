@@ -1,3 +1,5 @@
+require_relative 'journey'
+
 class Oystercard
 	MAX_BALANCE = 90
   MIN_FARE = 1
@@ -6,7 +8,7 @@ class Oystercard
 	def initialize(max_balance=MAX_BALANCE)
 		@balance = 0
 		@max_balance = max_balance
-    @card_journeys = {}
+    @card_journeys = []
 	end
 
 	def top_up(amount)
@@ -19,14 +21,16 @@ class Oystercard
     fail "card already in journey" if in_journey?
     fail "not enough money on the card min balance of £#{MIN_FARE}" if @balance < MIN_FARE
     @entry_station = station
-    @card_journeys.merge!(entry_station: Journey.new.start(station))
+    @card_journeys << Journey.new
+		@card_journeys.last.start(station)
   end
 
   def touch_out(station)
+	#	@card_journeys.last.complete?
     fail "card not in journey" unless in_journey?
     deduct_fare
     @entry_station = nil
-     @card_journeys.merge!(exit_station: Journey.new.finish(station))
+    @card_journeys.last.finish(station)
   end
 
   def in_journey?
