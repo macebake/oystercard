@@ -1,17 +1,20 @@
+require_relative 'journeylog'
+
 class Journey
 
   PENALTY_FARE = 6
   STANDARD_FARE = 1
 
   def initialize(*station)
+    @journeylog = JourneyLog.new
     @entry_station = station
     @exit_station = nil
   end
 
   def finish(station)
     @exit_station = station
-    log
-    fare
+    @journeylog.start(@entry_station)
+    @journeylog.finish(station)
   end
 
   def fare

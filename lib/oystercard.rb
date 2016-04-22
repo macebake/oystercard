@@ -9,7 +9,7 @@ class Oystercard
   def initialize
     @balance = 0
     @in_use = false
-    @history = []
+    @history = JourneyLog.new
   end
 
   def top_up money
@@ -26,8 +26,8 @@ class Oystercard
   def touch_out(station)
     @current_journey = Journey.new unless @in_use
     @current_journey.finish(station)
-    deduct(@current_journey.fare)
-    @history << @current_journey.log
+    # deduct(@current_journey.fare)
+    # @history << @current_journey.log
   end
 
   private
