@@ -20,4 +20,8 @@ class JourneyLog
     @log << current_journey
   end
 
+  def add(journey)
+    @log << journey
+  end
+
 end

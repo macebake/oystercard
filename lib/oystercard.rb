@@ -27,7 +27,7 @@ class Oystercard
     @current_journey = Journey.new unless @in_use
     @current_journey.finish(station)
     # deduct(@current_journey.fare)
-    # @history << @current_journey.log
+    @history.add(@current_journey)
   end
 
   private

@@ -6,15 +6,14 @@ class Journey
   STANDARD_FARE = 1
 
   def initialize(*station)
-    @journeylog = JourneyLog.new
     @entry_station = station
     @exit_station = nil
   end
 
   def finish(station)
     @exit_station = station
-    @journeylog.start(@entry_station)
-    @journeylog.finish(station)
+    # @journeylog.start(@entry_station)
+    # @journeylog.finish(station)
   end
 
   def fare
@@ -24,6 +23,7 @@ class Journey
 
   def log
     { @entry_station[0] => @exit_station }
+    # @journeylog << self
   end
 
   private
