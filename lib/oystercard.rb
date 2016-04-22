@@ -26,7 +26,7 @@ class Oystercard
   def touch_out(station)
     @current_journey = Journey.new unless @in_use
     @current_journey.finish(station)
-    # deduct(@current_journey.fare)
+    deduct(@current_journey.fare)
     @history.add(@current_journey)
   end
 

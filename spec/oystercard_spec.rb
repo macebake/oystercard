@@ -69,13 +69,5 @@ describe Oystercard do
       subject.touch_in(entry_station)
       subject.touch_out(exit_station)
     end
-    it 'add entry station of current journey to history' do
-      expect(subject.history[0]).to include entry_station
-    end
-
-    it 'add exit station of current journey to history' do
-      expect(subject.history[0][entry_station]).to be exit_station
-    end
-
   end
 end
